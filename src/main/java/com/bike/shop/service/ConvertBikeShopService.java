@@ -30,8 +30,7 @@ public class  ConvertBikeShopService {
         bikeModelList = bikeRepository.findAllById(bikeShopDto.getBike_id());
         bikeShopModel.setClientModel(clientModel);
         bikeShopModel.setBikeModel(bikeModelList);
-        bikeShopModel.setPayType(bikeShopDto.getPayType());
-        log.info("CONVERT BIKE SHOP SERVICE ");
+       log.info("CONVERT BIKE SHOP SERVICE ");
         return bikeShopModel;
 
     }

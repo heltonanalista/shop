@@ -27,10 +27,7 @@ private BikeShopService bikeShopService;
 public ConvertBikeShopService convertBikeShopService;
     @PostMapping("create")
     public ResponseEntity<?> register(@RequestBody  BikeShopDto bikeShopDto) {
-        System.out.println(bikeShopDto.getShopData());
-        System.out.println(bikeShopDto.getBike_id());
-        System.out.println(bikeShopDto.getPayType());
-        System.out.println(bikeShopDto.getClient_id());
+
         try {
 
             bikeShopModel = bikeShopService.saveBikeShop(convertBikeShopService.entity(bikeShopDto));

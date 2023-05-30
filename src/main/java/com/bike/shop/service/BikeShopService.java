@@ -19,10 +19,8 @@ public class BikeShopService {
 
     public BikeShopModel saveBikeShop(BikeShopModel bikeShopModel) {
         valortotal = bikeShopModel.getBikeModel().stream().mapToDouble((price) -> price.getPrice()).sum();
-        if (bikeShopModel.getPayType().toString()=="DEBIT"){
-            System.out.println(bikeShopModel.getPayType());
-            valortotal = valortotal - valortotal * 0.10;
-        }
+
+
         bikeShopModel.setTotalPrice(valortotal);
         return bikeShopRepository.save(bikeShopModel);
     }

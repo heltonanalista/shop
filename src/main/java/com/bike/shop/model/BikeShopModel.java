@@ -18,7 +18,5 @@ public class BikeShopModel {
     @ManyToMany
     private List<BikeModel>bikeModel;
     private Double totalPrice;
-    @Enumerated(EnumType.STRING)
-    private PayType payType;
     }
 

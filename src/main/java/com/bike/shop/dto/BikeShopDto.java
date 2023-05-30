@@ -19,6 +19,5 @@ public class BikeShopDto {
     private LocalDateTime shopData;
     private Long client_id;
     private List<Long> bike_id;
-    private PayType payType;
 
 }
