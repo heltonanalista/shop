@@ -1,7 +1,6 @@
 package com.bike.shop.controller;
 
 import com.bike.shop.dto.ClientModelDto;
-import com.bike.shop.model.BikeModel;
 import com.bike.shop.model.ClientModel;
 import com.bike.shop.service.ClientService;
 import com.bike.shop.service.ConvertClientDtoService;
@@ -44,26 +43,26 @@ public class ClientController {
         try {
             ClientModel clientid = clientService.findClientId(id);
             clientService.deleteClient(clientid);
-            log.info("BIKE-CONTROLLER = bike removida com sucesso");
+            log.info("CLIENTE-CONTROLLER = CLIENTE removida com sucesso");
         } catch (DataIntegrityViolationException e) {
-            log.info("BIKE-CONTROLLER = erro ao remover bike foreignkey");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO PODE SER REMOVIDA POIS ESTA EM USO");
+            log.info("CLIENTE-CONTROLLER = erro ao remover CLIENTE foreignkey");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CLIENTE NAO PODE SER REMOVIDO POIS ESTA EM USO");
         } catch (Exception e) {
-            log.info("BIKE-CONTROLLER = bike nao existe");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO EXISTE");
+            log.info("CLIENTE-CONTROLLER = CLIENTE nao existe");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CLIENTE NAO EXISTE");
 
         }
-        return ResponseEntity.status(HttpStatus.OK).body("BICICLETA REMOVIDA");
+        return ResponseEntity.status(HttpStatus.OK).body("CLIENTE REMOVIDO");
     }
     @GetMapping("findid/{id}")
     public ResponseEntity<?> find(@PathVariable Long id) {
         ClientModel cod;
         try {
             cod = clientService.findClientId(id);
-            log.info("BIKE-CONTROLLER = retorna bike por id");
+            log.info("CLIENTE-CONTROLLER = retorna CLIENTE por id");
         } catch (Exception e) {
-            log.info("BIKE-CONTROLLER = erro ao buscar bike por id, nao existe");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO EXISTE");
+            log.info("CLIENTE-CONTROLLER = erro ao buscar CLIENTE por id, nao existe");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CLIENTE NAO EXISTE");
         }
         return ResponseEntity.status(HttpStatus.OK).body(convertClientDtoService.clientDto(cod));
     }
@@ -74,7 +73,7 @@ public class ClientController {
         try {
             cod = clientService.all();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO EXISTE");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CLIENTE NAO EXISTE");
         }
         return ResponseEntity.status(HttpStatus.OK).body(cod);
     }

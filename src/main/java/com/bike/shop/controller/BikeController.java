@@ -5,7 +5,6 @@ import com.bike.shop.model.BikeModel;
 import com.bike.shop.service.BikeService;
 import com.bike.shop.service.ConvertBikeService;
 import jakarta.validation.Valid;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

@@ -2,13 +2,11 @@ package com.bike.shop.service;
 
 import com.bike.shop.model.BikeModel;
 import com.bike.shop.model.BikeShopModel;
-import com.bike.shop.repository.BikeRepository;
 import com.bike.shop.repository.BikeShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BikeShopService {

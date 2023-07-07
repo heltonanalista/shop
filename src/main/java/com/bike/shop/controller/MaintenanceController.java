@@ -4,11 +4,12 @@ import com.bike.shop.dto.MaintenanceModelDto;
 import com.bike.shop.model.MaintenanceModel;
 import com.bike.shop.service.ConvertMaintenanceService;
 import com.bike.shop.service.MaintenanceService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@Log4j2
 @RestController
 @RequestMapping("maintenance")
 public class MaintenanceController {
@@ -20,7 +21,7 @@ public class MaintenanceController {
 
     @PostMapping("register")
     public ResponseEntity<?> register(@RequestBody MaintenanceModelDto maintenanceModelDto) {
-        System.out.println(maintenanceModelDto.getDescription());
+        log.info("bikeshop controller valor {}"+maintenanceModelDto);
         maintenanceModel = maintenanceService.saveMaintenance(convertMaintenanceService.maintenanceEntity(maintenanceModelDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(convertMaintenanceService.maintenanceDto(maintenanceModel));
     }
@@ -29,11 +30,13 @@ public class MaintenanceController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
             MaintenanceModel maintenanceid = maintenanceService.findMaintenanceId(id);
-            maintenanceService.deleteMaintenance(maintenanceModel);
+            log.info("VALOR MANUTENCAO A SER REMOVIDA{}"+maintenanceid);
+            maintenanceService.deleteMaintenance(maintenanceid);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO EXISTE");
+            log.info("NAO REMOVEU MANUTENCAO EXCEPTION{}"+e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NAO HA MANUTENCAO REGISTRADA");
         }
-        return ResponseEntity.status(HttpStatus.OK).body("BICICLETA REMOVIDA");
+        return ResponseEntity.status(HttpStatus.OK).body("MANUTENCAO REMOVIDA");
     }
 
     @GetMapping("findid/{id}")
@@ -42,7 +45,7 @@ public class MaintenanceController {
         try {
             cod = maintenanceService.findMaintenanceId(id);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO EXISTE");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NAO HA MANUTENCAO REGISTRADA");
         }
         return ResponseEntity.status(HttpStatus.OK).body(convertMaintenanceService.maintenanceDto(cod));
     }

@@ -1,4 +1,4 @@
-package com.bike.shop;
+package com.bike.shop.service;
 
 
 

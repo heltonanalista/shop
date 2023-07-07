@@ -1,9 +1,5 @@
 package com.bike.shop;
 
-import com.bike.shop.model.BikeModel;
-import com.bike.shop.model.bikeType;
-import com.bike.shop.service.BikeService;
-import com.bike.shop.service.BikeShopService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
