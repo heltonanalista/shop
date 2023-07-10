@@ -9,13 +9,11 @@ import org.springframework.stereotype.Component;
 public class ConvertClientDtoService {
     private ClientModel clientModel;
     private ClientModelDto clientModelDto;
-
     public ClientModelDto clientDto(ClientModel clientModel) {
         this.clientModelDto = new ClientModelDto();
         BeanUtils.copyProperties(clientModel, clientModelDto);
         return clientModelDto;
     }
-
     public ClientModel clientEntity(ClientModelDto clientModelDto) {
         clientModel = new ClientModel();
 

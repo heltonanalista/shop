@@ -17,15 +17,9 @@ public class PartsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private String name;
-    @NotBlank
     private String brand;
-    @NotBlank
     private String model;
-    @NotNull
     private Integer quantity;
-    @NotNull
     private Double price;
-
 }

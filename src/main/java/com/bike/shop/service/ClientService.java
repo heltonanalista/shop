@@ -9,26 +9,17 @@ import java.util.List;
 
 @Service
 public class ClientService {
-
-
     @Autowired
     private ClientRepository clientRepository;
-
-
     public void saveClient(ClientModel clientModel) {
-
         clientRepository.save(clientModel);
     }
-
     public ClientModel findClientId(Long id) {
         return clientRepository.findById(id).get();
-
     }
     public void deleteClient(ClientModel clientModel){
-
         clientRepository.delete(clientModel);
     }
-
     public List<ClientModel> all() {
         return clientRepository.findAll();
     }

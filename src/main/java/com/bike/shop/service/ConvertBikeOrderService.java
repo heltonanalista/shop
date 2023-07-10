@@ -1,8 +1,8 @@
 package com.bike.shop.service;
 
-import com.bike.shop.dto.BikeShopDto;
+import com.bike.shop.dto.BikeOrderDto;
 import com.bike.shop.model.BikeModel;
-import com.bike.shop.model.BikeShopModel;
+import com.bike.shop.model.BikeOrder;
 import com.bike.shop.model.ClientModel;
 import com.bike.shop.repository.BikeRepository;
 import com.bike.shop.repository.ClientRepository;
@@ -15,10 +15,9 @@ import java.util.List;
 
 @Component
 @Log4j2
-public class ConvertBikeShopService {
-
-    private BikeShopModel bikeShopModel;
-    private BikeShopDto bikeShopDto;
+public class ConvertBikeOrderService {
+   private BikeOrder bikeOrder;
+    private BikeOrderDto bikeOrderDto;
     private ClientModel clientModel;
     private List<BikeModel> bikeModelList;
     @Autowired
@@ -26,18 +25,14 @@ public class ConvertBikeShopService {
     @Autowired
     public BikeRepository bikeRepository;
 
-
-    public BikeShopDto bikeShopDto(BikeShopModel bikeShopModel) {
-        bikeShopDto = new BikeShopDto();
-        BeanUtils.copyProperties(bikeShopModel, bikeShopDto);
-        return bikeShopDto;
+    public BikeOrderDto bikeShopDto(BikeOrder bikeOrder) {
+        bikeOrderDto = new BikeOrderDto();
+        BeanUtils.copyProperties(bikeOrder, bikeOrderDto);
+        return bikeOrderDto;
     }
-
-    public BikeShopModel bikeShopEntity(BikeShopDto bikeShopDto) {
-        bikeShopModel = new BikeShopModel();
-        BeanUtils.copyProperties(bikeShopDto, bikeShopModel);
-        return bikeShopModel;
+    public BikeOrder bikeShopEntity(BikeOrderDto bikeOrderDto) {
+        bikeOrder = new BikeOrder();
+        BeanUtils.copyProperties(bikeOrderDto, bikeOrder);
+        return bikeOrder;
     }
-
-
 }

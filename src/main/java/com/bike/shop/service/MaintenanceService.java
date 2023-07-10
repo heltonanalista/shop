@@ -10,33 +10,19 @@ import java.util.List;
 @Log4j2
 @Service
 public class MaintenanceService {
-
-
     @Autowired
     private MaintenanceRepository maintenanceRepository;
     public MaintenanceModel saveMaintenance(MaintenanceModel maintenanceModel){
-
         return maintenanceRepository.save(maintenanceModel);
-
-
     }
     public void deleteMaintenance(MaintenanceModel maintenanceModel){
         log.info("MANUTENCAO SERVICE REMOVER MANUTENCAO {}"+maintenanceModel);
         maintenanceRepository.delete(maintenanceModel);
-
-
     }
     public MaintenanceModel findMaintenanceId(Long id){
-
-
         return maintenanceRepository.findById(id).get();
-
-
     }
     public List<MaintenanceModel> all(){
-
         return maintenanceRepository.findAll();
-
-
     }
 }

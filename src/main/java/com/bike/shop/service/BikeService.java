@@ -12,28 +12,15 @@ public class BikeService {
     @Autowired
     private BikeRepository bikeRepository;
     public BikeModel saveBike(BikeModel bikeModel){
-
        return bikeRepository.save(bikeModel);
-
-
     }
     public void deleteBike(BikeModel bikeModel){
-
        bikeRepository.delete(bikeModel);
-
-
     }
     public BikeModel findBikeId(Long id){
-
         return bikeRepository.findById(id).get();
-
-
     }
     public List<BikeModel> all(){
-
         return bikeRepository.findAll();
-
-
     }
-
 }

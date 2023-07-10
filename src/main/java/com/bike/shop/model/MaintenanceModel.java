@@ -24,14 +24,10 @@ public class MaintenanceModel {
     @OneToOne
     @JoinColumn(name = "client_id")
     private ClientModel clientModel;
-
     private String description;
     @OneToMany
     @JoinTable(name = "peca_reposicao", joinColumns = @JoinColumn(name = "manutencao_id"), inverseJoinColumns = @JoinColumn(name = "peca_id"))
     private List<PartsModel> partsExchange;
     private Double laborCost;
-
     private Double totalPrice;
-
-
 }

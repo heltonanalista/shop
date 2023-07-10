@@ -7,13 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BikeShopDto {
-    private Long id;
-    private LocalDateTime shopData;
+public class MaintenanceOrderDto {
+    private Double laborCost;
+    private BikeModel bikeModel;
+    private LocalDateTime shopDate;
     private ClientModel clientModel;
-    private List<BikeModel>bikeModel;
+    private Double totalPrice;
+
 }

@@ -15,22 +15,20 @@ import java.util.List;
 
 @Log4j2
 @RestController
-@RequestMapping("maintenance")
+@RequestMapping("/maintenance")
 public class MaintenanceController {
     public MaintenanceModel maintenanceModel;
     @Autowired
     public MaintenanceService maintenanceService;
     @Autowired
     public ConvertMaintenanceService convertMaintenanceService;
-
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody MaintenanceModelDto maintenanceModelDto) {
         log.info("bikeshop controller valor {}"+maintenanceModelDto);
         maintenanceModel = maintenanceService.saveMaintenance(convertMaintenanceService.maintenanceEntity(maintenanceModelDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(convertMaintenanceService.maintenanceDto(maintenanceModel));
     }
-
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
             MaintenanceModel maintenanceid = maintenanceService.findMaintenanceId(id);
@@ -42,8 +40,7 @@ public class MaintenanceController {
         }
         return ResponseEntity.status(HttpStatus.OK).body("MANUTENCAO REMOVIDA");
     }
-
-    @GetMapping("findid/{id}")
+    @GetMapping("/findid/{id}")
     public ResponseEntity<?> find(@PathVariable Long id) {
         MaintenanceModel cod;
         try {
@@ -53,7 +50,7 @@ public class MaintenanceController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(convertMaintenanceService.maintenanceDto(cod));
     }
-    @GetMapping("findall")
+    @GetMapping("/findall")
     public ResponseEntity<?> findAll() {
         List<MaintenanceModel> cod;
         try {

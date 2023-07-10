@@ -16,15 +16,14 @@ import java.util.List;
 
 @Log4j2
 @RestController
-@RequestMapping("client")
+@RequestMapping("/client")
 public class ClientController {
     @Autowired
     public ClientService clientService;
     @Autowired
     public ConvertClientDtoService convertClientDtoService;
     private ClientModel clientModel;
-
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<?> registerClient(@RequestBody @Valid ClientModelDto clientModelDto) {
         System.out.println(clientModelDto.getNome());
         clientModel = convertClientDtoService.clientEntity(clientModelDto);
@@ -36,10 +35,8 @@ public class ClientController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(convertClientDtoService.clientDto(clientModel));
     }
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-
-
         try {
             ClientModel clientid = clientService.findClientId(id);
             clientService.deleteClient(clientid);
@@ -50,11 +47,10 @@ public class ClientController {
         } catch (Exception e) {
             log.info("CLIENTE-CONTROLLER = CLIENTE nao existe");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CLIENTE NAO EXISTE");
-
         }
         return ResponseEntity.status(HttpStatus.OK).body("CLIENTE REMOVIDO");
     }
-    @GetMapping("findid/{id}")
+    @GetMapping("/findid/{id}")
     public ResponseEntity<?> find(@PathVariable Long id) {
         ClientModel cod;
         try {
@@ -66,8 +62,7 @@ public class ClientController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(convertClientDtoService.clientDto(cod));
     }
-
-    @GetMapping("findall")
+    @GetMapping("/findall")
     public ResponseEntity<?> findAll() {
         List<ClientModel> cod;
         try {

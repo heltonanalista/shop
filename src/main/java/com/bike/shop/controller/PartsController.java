@@ -40,11 +40,10 @@ public class PartsController {
 
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid PartsModelDto partsModelDto) {
         System.out.println(partsModelDto.getModel());
             try {
-
             partsModel = partsService.saveParts(convertPartsService.partsEntity(partsModelDto));
             System.out.println(partsModel);
             log.info("valor pecas{}"+partsModel);
@@ -52,13 +51,10 @@ public class PartsController {
         } catch (Exception e) {
             log.info("PECA-CONTROLLER = erro ao registrar PECA");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CAMPO NAO PODE SER VAZIO OU NULO");
-
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(convertPartsService.partsDto(partsModel));
     }
-
-
-    @GetMapping("findid/{id}")
+    @GetMapping("/findid/{id}")
     public ResponseEntity<?> find(@PathVariable Long id) {
         PartsModel cod;
         try {
@@ -70,8 +66,7 @@ public class PartsController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(convertPartsService.partsDto(cod));
     }
-
-    @GetMapping("findall")
+    @GetMapping("/findall")
     public ResponseEntity<?> findAll() {
         List<PartsModel> cod;
         try {
@@ -81,10 +76,8 @@ public class PartsController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(cod);
     }
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-
-
         try {
             PartsModel partid = partsService.findPartsId(id);
             partsService.deleteParts(partid);
@@ -95,7 +88,6 @@ public class PartsController {
         } catch (Exception e) {
             log.info("PECA-CONTROLLER = PECA nao existe");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("PECA NAO EXISTE");
-
         }
         return ResponseEntity.status(HttpStatus.OK).body("PECA REMOVIDO");
     }

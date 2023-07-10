@@ -1,6 +1,6 @@
 package com.bike.shop.controller;
 
-import com.bike.shop.dto.BikeModelDto;
+import com.bike.shop.dto.BikeOrderDto;
 import com.bike.shop.model.BikeModel;
 import com.bike.shop.service.BikeService;
 import com.bike.shop.service.ConvertBikeService;
@@ -16,32 +16,26 @@ import java.util.List;
 
 @Log4j2
 @RestController
-@RequestMapping("bike")
+@RequestMapping("/bike")
 public class BikeController {
     @Autowired
     public BikeService bikeService;
     @Autowired
     public ConvertBikeService convertBikeService;
     public BikeModel bikeModel;
-
-    @PostMapping("register")
-    public ResponseEntity<?> register(@RequestBody @Valid BikeModelDto bikeModelDto) {
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody @Valid BikeOrderDto bikeOrderDto) {
         try {
-
-            bikeModel = bikeService.saveBike(convertBikeService.bikeEntity(bikeModelDto));
+            bikeModel = bikeService.saveBike(convertBikeService.bikeEntity(bikeOrderDto));
             log.info("BIKE-CONTROLLER = bike registrada");
         } catch (Exception e) {
             log.info("BIKE-CONTROLLER = erro ao registrar bike");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CAMPO NAO PODE SER VAZIO OU NULO");
-
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(convertBikeService.bikeDto(bikeModel));
     }
-
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-
-
         try {
             BikeModel bikeId = bikeService.findBikeId(id);
             bikeService.deleteBike(bikeId);
@@ -52,12 +46,11 @@ public class BikeController {
         } catch (Exception e) {
             log.info("BIKE-CONTROLLER = bike nao existe");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO EXISTE");
-
         }
         return ResponseEntity.status(HttpStatus.OK).body("BICICLETA REMOVIDA");
     }
 
-    @GetMapping("findid/{id}")
+    @GetMapping("/findid/{id}")
     public ResponseEntity<?> find(@PathVariable Long id) {
         BikeModel cod;
         try {
@@ -70,7 +63,7 @@ public class BikeController {
         return ResponseEntity.status(HttpStatus.OK).body(convertBikeService.bikeDto(cod));
     }
 
-    @GetMapping("findall")
+    @GetMapping("/findall")
     public ResponseEntity<?> findAll() {
         List<BikeModel> cod;
         try {

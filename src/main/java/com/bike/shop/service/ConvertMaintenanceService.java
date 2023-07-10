@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ConvertMaintenanceService {
-
     private MaintenanceModel maintenanceModel;
     private MaintenanceModelDto maintenanceModelDto;
     public MaintenanceModelDto maintenanceDto(MaintenanceModel maintenanceModel) {
@@ -19,7 +18,5 @@ public class ConvertMaintenanceService {
         maintenanceModel = new MaintenanceModel();
         BeanUtils.copyProperties( maintenanceModelDto,maintenanceModel);
         return maintenanceModel;
-
     }
-
 }

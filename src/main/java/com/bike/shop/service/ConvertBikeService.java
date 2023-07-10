@@ -1,6 +1,6 @@
 package com.bike.shop.service;
 
-import com.bike.shop.dto.BikeModelDto;
+import com.bike.shop.dto.BikeOrderDto;
 import com.bike.shop.model.BikeModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -8,32 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConvertBikeService {
     private BikeModel bikeModel;
-    private BikeModelDto bikeModelDto;
-
-    public BikeModelDto bikeDto(BikeModel bikeModel) {
-        this.bikeModelDto = new BikeModelDto();
-        BeanUtils.copyProperties(bikeModel,bikeModelDto);
-
-        return this.bikeModelDto;
-
+    private BikeOrderDto bikeOrderDto;
+    public BikeOrderDto bikeDto(BikeModel bikeModel) {
+        this.bikeOrderDto = new BikeOrderDto();
+        BeanUtils.copyProperties(bikeModel, bikeOrderDto);
+        return this.bikeOrderDto;
     }
-
-
-    public BikeModel bikeEntity(BikeModelDto bikeModelDto) {
-
+    public BikeModel bikeEntity(BikeOrderDto bikeOrderDto) {
         bikeModel = new BikeModel();
-        BeanUtils.copyProperties(bikeModelDto,bikeModel);
-
+        BeanUtils.copyProperties(bikeOrderDto,bikeModel);
         return this.bikeModel;
-
     }
-  /*  public List<BikeModelDto> listAll(List <BikeModel> bikeModelList){
-
-        return bikeModelList.stream()
-                .map(BikeModelDto::new)
-                .collect(Collectors.toList());
-
-    }
-    */
-  
 }
