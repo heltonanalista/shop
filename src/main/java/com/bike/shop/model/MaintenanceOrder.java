@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,10 +17,12 @@ public class MaintenanceOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double laborCost;
- @OneToOne
+    @OneToOne
     private BikeModel bikeModel;
     private LocalDateTime shopDate;
     @OneToOne
     private ClientModel clientModel;
     private Double totalPrice;
+    @OneToMany
+    private List<PartsModel> partsModel;
 }

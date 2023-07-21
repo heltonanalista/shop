@@ -1,6 +1,7 @@
 package com.bike.shop.service;
 
 import com.bike.shop.model.BikeModel;
+import com.bike.shop.model.PartsModel;
 import com.bike.shop.repository.BikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,8 @@ public class BikeService {
     }
     public List<BikeModel> all(){
         return bikeRepository.findAll();
+    }
+    public List<BikeModel> allId(List<Long> ids) {
+        return bikeRepository.findAllById(ids);
     }
 }
