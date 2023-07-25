@@ -24,15 +24,14 @@ public class ClientController {
     public ConvertClientDtoService convertClientDtoService;
     private ClientModel clientModel;
     @PostMapping("/register")
-    public ResponseEntity<?> registerClient(@RequestBody @Valid ClientModelDto clientModelDto) {
-        System.out.println(clientModelDto.getNome());
+    public ResponseEntity<ClientModelDto> registerClient(@RequestBody @Valid ClientModelDto clientModelDto) {
+
         clientModel = convertClientDtoService.clientEntity(clientModelDto);
-       System.out.println(clientModel.getNome());
-        try {
+
             clientService.saveClient(clientModel);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CAMPO NAO PODE SER VAZIO OU NULO");
-        }
+
+
+
         return ResponseEntity.status(HttpStatus.CREATED).body(convertClientDtoService.clientDto(clientModel));
     }
     @DeleteMapping("/delete/{id}")

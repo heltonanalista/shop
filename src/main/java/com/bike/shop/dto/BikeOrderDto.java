@@ -4,6 +4,7 @@ import com.bike.shop.model.ClientModel;
 import com.bike.shop.model.bikeType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BikeOrderDto {
+    @NotNull
     private LocalDateTime shopData;
+    @NotNull
     private ClientModel clientModel;
+    @NotNull
     private BikeModel bikeModel;
+    @NotNull
     private Double totalPrice;
 
 }

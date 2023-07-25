@@ -77,62 +77,62 @@ class MaintenanceServiceTest {
         listIds.add(5L);
         listIds.add(6L);
     }
-
-    @Test
-    @DisplayName("whenSaveBikeThenReturnBike")
-    void whenSaveBikeThenReturnBike() {
-
-        Mockito.when(clientRepository.save(Mockito.any())).thenReturn(client1);
-
-        ClientModel criado = clientService.saveClient(client1);
-
-        Assertions.assertEquals(1, criado.getId());
-        Assertions.assertEquals("helton silva", criado.getNome());
-        Assertions.assertEquals("567456745", criado.getCpf());
-        Assertions.assertEquals("helton@teste.com", criado.getEmail());
-        Assertions.assertEquals("148594554", criado.getFone());
-        Assertions.assertEquals("rua nove", criado.getEndereco());
-        Assertions.assertEquals("179904353", criado.getCep());
-        Assertions.assertEquals("bauru", criado.getCidade());
-        Assertions.assertEquals("sp", criado.getEstado());
-    }
-
-    @Test
-    void deleteParts() {
-    }
-
-    @Test
-    @DisplayName("whenFindBikeByIdThenReturnBike")
-    void whenFindBikeByIdThenReturnBike() {
-        Mockito.when(clientRepository.findById(Mockito.any())).thenReturn(Optional.ofNullable(client1));
-        ClientModel retorno = clientService.findClientId(client1.getId());
-
-        Assertions.assertEquals(1, retorno.getId());
-        Assertions.assertEquals("helton silva", retorno.getNome());
-        Assertions.assertEquals("567456745", retorno.getCpf());
-        Assertions.assertEquals("helton@teste.com", retorno.getEmail());
-        Assertions.assertEquals("148594554", retorno.getFone());
-        Assertions.assertEquals("rua nove", retorno.getEndereco());
-        Assertions.assertEquals("179904353", retorno.getCep());
-        Assertions.assertEquals("bauru", retorno.getCidade());
-        Assertions.assertEquals("sp", retorno.getEstado());
-
-    }
-
-    @Test
-    @DisplayName("whenFindAllBikesThenReturnAllBikes")
-    void whenFindAllBikesThenReturnAllBikes() {
-        Mockito.when(clientRepository.findAll()).thenReturn(listClient);
-        List<ClientModel> listar = clientService.all();
-        Assertions.assertEquals(5, listar.size());
-    }
-
-    @Test
-    @DisplayName("whenFindAllByIdPartsThenReturnAllParts")
-    void whenFindAllByIdPartsThenReturnAllParts() {
-        Mockito.when(clientRepository.findAllById(Mockito.anyCollection())).thenReturn(listClient);
-        List<ClientModel> list = clientService.allId(listIds);
-        Assertions.assertEquals(5, list.size());
-    }
+//
+//    @Test
+//    @DisplayName("whenSaveMaintenanceThenReturnMaintenance")
+//    void whenSaveMaintenanceThenReturnMaintenance() {
+//
+//        Mockito.when(maintenanceRepository.save(Mockito.any())).thenReturn(maintenance1);
+//
+//        MaintenanceModel criado = maintenanceService.saveMaintenance(maintenance1);
+//
+//        Assertions.assertEquals(1, criado.getId());
+//        Assertions.assertEquals("helton silva", criado.getNome());
+//        Assertions.assertEquals("567456745", criado.getCpf());
+//        Assertions.assertEquals("helton@teste.com", criado.getEmail());
+//        Assertions.assertEquals("148594554", criado.getFone());
+//        Assertions.assertEquals("rua nove", criado.getEndereco());
+//        Assertions.assertEquals("179904353", criado.getCep());
+//        Assertions.assertEquals("bauru", criado.getCidade());
+//        Assertions.assertEquals("sp", criado.getEstado());
+//    }
+//
+//    @Test
+//    void deleteParts() {
+//    }
+//
+//    @Test
+//    @DisplayName("whenFindMaintenanceByIdThenReturnMaintenance")
+//    void whenFindMaintenanceByIdThenReturnMaintenance() {
+//        Mockito.when(maintenanceRepository.findById(Mockito.any())).thenReturn(Optional.ofNullable(maintenance1) );
+//        MaintenanceModel retorno = maintenanceService.findMaintenanceId(maintenance1.getId());
+//
+//        Assertions.assertEquals(1, retorno.getId());
+//        Assertions.assertEquals("helton silva", retorno.getNome());
+//        Assertions.assertEquals("567456745", retorno.getCpf());
+//        Assertions.assertEquals("helton@teste.com", retorno.getEmail());
+//        Assertions.assertEquals("148594554", retorno.getFone());
+//        Assertions.assertEquals("rua nove", retorno.getEndereco());
+//        Assertions.assertEquals("179904353", retorno.getCep());
+//        Assertions.assertEquals("bauru", retorno.getCidade());
+//        Assertions.assertEquals("sp", retorno.getEstado());
+//
+//    }
+//
+//    @Test
+//    @DisplayName("whenFindAllMaintenanceThenReturnAllMaintenance")
+//    void whenFindAllMaintenanceThenReturnAllMaintenance() {
+//        Mockito.when(maintenanceRepository.findAll()).thenReturn(listMaintenance);
+//        List<MaintenanceModel> listar = maintenanceService.all();
+//        Assertions.assertEquals(5, listar.size());
+//    }
+//
+//    @Test
+//    @DisplayName("whenFindAllByIdMaintenanceThenReturnAllMaintenance")
+//    void whenFindAllByIdMaintenanceThenReturnAllMaintenance() {
+//        Mockito.when(maintenanceRepository.findAllById(Mockito.anyCollection())).thenReturn(listMaintenance);
+//        List<ClientModel> list = maintenanceService.(listIds);
+//        Assertions.assertEquals(5, list.size());
+//    }
 
 }

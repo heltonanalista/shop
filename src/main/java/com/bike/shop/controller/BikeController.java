@@ -1,5 +1,6 @@
 package com.bike.shop.controller;
 
+import com.bike.shop.dto.BikeModelDto;
 import com.bike.shop.dto.BikeOrderDto;
 import com.bike.shop.model.BikeModel;
 import com.bike.shop.service.BikeService;
@@ -24,29 +25,22 @@ public class BikeController {
     public ConvertBikeService convertBikeService;
     public BikeModel bikeModel;
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid BikeOrderDto bikeOrderDto) {
-        try {
-            bikeModel = bikeService.saveBike(convertBikeService.bikeEntity(bikeOrderDto));
-            log.info("BIKE-CONTROLLER = bike registrada");
-        } catch (Exception e) {
-            log.info("BIKE-CONTROLLER = erro ao registrar bike");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CAMPO NAO PODE SER VAZIO OU NULO");
-        }
+    public ResponseEntity<BikeModelDto> register(@RequestBody @Valid BikeModelDto bikeModelDto) {
+
+            bikeModel = bikeService.saveBike(convertBikeService.bikeEntity(bikeModelDto));
+
+
         return ResponseEntity.status(HttpStatus.CREATED).body(convertBikeService.bikeDto(bikeModel));
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        try {
+
             BikeModel bikeId = bikeService.findBikeId(id);
             bikeService.deleteBike(bikeId);
             log.info("BIKE-CONTROLLER = bike removida com sucesso");
-        } catch (DataIntegrityViolationException e) {
-            log.info("BIKE-CONTROLLER = erro ao remover bike foreignkey");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO PODE SER REMOVIDA POIS ESTA EM USO");
-        } catch (Exception e) {
-            log.info("BIKE-CONTROLLER = bike nao existe");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO EXISTE");
-        }
+
+
+
         return ResponseEntity.status(HttpStatus.OK).body("BICICLETA REMOVIDA");
     }
 
