@@ -2,7 +2,6 @@ package com.bike.shop.controller;
 
 import com.bike.shop.dto.BikeOrderDto;
 import com.bike.shop.model.BikeOrder;
-import com.bike.shop.model.MaintenanceOrder;
 import com.bike.shop.service.BikeOrderService;
 import com.bike.shop.service.ConvertBikeOrderService;
 import lombok.extern.log4j.Log4j2;
@@ -17,25 +16,28 @@ import java.util.List;
 @Log4j2
 @RequestMapping("/bikeorder")
 public class BikeOrderController {
-private BikeOrder bikeOrder;
-@Autowired
-private BikeOrderService bikeOrderService;
-@Autowired
-public ConvertBikeOrderService convertBikeOrderService;
+    private BikeOrder bikeOrder;
+    @Autowired
+    private BikeOrderService bikeOrderService;
+    @Autowired
+    public ConvertBikeOrderService convertBikeOrderService;
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody BikeOrderDto bikeOrderDto) {
-
         bikeOrder = bikeOrderService.saveBikeOrder(convertBikeOrderService.bikeShopEntity(bikeOrderDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(bikeOrder);
     }
+
     @GetMapping("/findall")
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<List<BikeOrder>> findAll() {
         List<BikeOrder> cod;
-        try {
-            cod = bikeOrderService.all();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MANUTENCAO NAO EXISTE");
+        cod = bikeOrderService.all();
+        if (cod.size()==0) {
+            System.out.println(cod);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        return ResponseEntity.status(HttpStatus.OK).body(cod);
+        else
+
+            return ResponseEntity.status(HttpStatus.OK).body(cod);
     }
 }

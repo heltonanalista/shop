@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @Log4j2
@@ -24,47 +25,32 @@ public class BikeController {
     @Autowired
     public ConvertBikeService convertBikeService;
     public BikeModel bikeModel;
+
     @PostMapping("/register")
     public ResponseEntity<BikeModelDto> register(@RequestBody @Valid BikeModelDto bikeModelDto) {
-
-            bikeModel = bikeService.saveBike(convertBikeService.bikeEntity(bikeModelDto));
-
-
+        bikeModel = bikeService.saveBike(convertBikeService.bikeEntity(bikeModelDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(convertBikeService.bikeDto(bikeModel));
     }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-
-            BikeModel bikeId = bikeService.findBikeId(id);
-            bikeService.deleteBike(bikeId);
-            log.info("BIKE-CONTROLLER = bike removida com sucesso");
-
-
-
-        return ResponseEntity.status(HttpStatus.OK).body("BICICLETA REMOVIDA");
+    public ResponseEntity delete(@PathVariable Long id) {
+        BikeModel bikeId = bikeService.findBikeId(id);
+        bikeService.deleteBike(bikeId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("BICICLETA REMOVIDA");
     }
 
     @GetMapping("/findid/{id}")
-    public ResponseEntity<?> find(@PathVariable Long id) {
+    public ResponseEntity<BikeModelDto> find(@PathVariable Long id) {
         BikeModel cod;
-        try {
-            cod = bikeService.findBikeId(id);
-            log.info("BIKE-CONTROLLER = retorna bike por id");
-        } catch (Exception e) {
-            log.info("BIKE-CONTROLLER = erro ao buscar bike por id, nao existe");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO EXISTE");
-        }
+        cod = bikeService.findBikeId(id);
         return ResponseEntity.status(HttpStatus.OK).body(convertBikeService.bikeDto(cod));
     }
 
     @GetMapping("/findall")
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<List<BikeModel>> findAll() {
         List<BikeModel> cod;
-        try {
-            cod = bikeService.all();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BICICLETA NAO EXISTE");
-        }
+        cod = bikeService.all();
+        Collections.sort(cod);
         return ResponseEntity.status(HttpStatus.OK).body(cod);
     }
 }

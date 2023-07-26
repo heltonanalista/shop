@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "bike")
-public class BikeModel {
+public class BikeModel implements Comparable<BikeModel> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +28,19 @@ public class BikeModel {
     private Double price;
     @Enumerated(EnumType.STRING)
     private bikeType bikeType;
+
+
+    @Override
+    public int compareTo(BikeModel bikeModel) {
+        if (this.price < bikeModel.price) {
+            return -1;
+        }
+        if (this.price > bikeModel.price) {
+            return 1;
+        }
+        return 0;
+
+    }
 
 
 }
