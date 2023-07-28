@@ -1,0 +1,10 @@
+alter table bike_order add constraint FKbikeorderbikeid foreign key (bike_model_id) references bike (id);
+alter table bike_order add constraint FKbikeorderclientid foreign key (client_model_id) references client (id);
+alter table manutencao add constraint FKmanutencaobikeid foreign key (bike_id) references bike (id);
+alter table manutencao add constraint FKmanutencaoclientid foreign key (client_id) references client (id);
+alter table peca_reposicao add constraint FKpecareposicaopecaid foreign key (peca_id) references parts (id);
+alter table peca_reposicao add constraint FKpecareposicaomanutencaoid foreign key (manutencao_id) references manutencao (id);
+alter table maintenance_order add constraint FKmaintenanceorderbikeid foreign key (bike_model_id) references bike (id);
+alter table maintenance_order add constraint FKmaintenanceorderclientid foreign key (client_model_id) references client (id);
+alter table maintenance_order_parts_model add constraint FKmaintenanceorderpartpartid foreign key (parts_model_id) references parts (id);
+alter table maintenance_order_parts_model add constraint FKmaintenanceorderpartmaintenaceorderid foreign key (maintenance_order_id) references maintenance_order (id);
