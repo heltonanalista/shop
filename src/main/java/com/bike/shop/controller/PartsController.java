@@ -36,7 +36,7 @@ public class PartsController {
     }
     @PostMapping("/register")
     public ResponseEntity<PartsModelDto> register(@RequestBody @Valid PartsModelDto partsModelDto) {
-        System.out.println(partsModelDto.getModel());
+
             partsModel = partsService.saveParts(convertPartsService.partsEntity(partsModelDto));
           return ResponseEntity.status(HttpStatus.CREATED).body(convertPartsService.partsDto(partsModel));
     }

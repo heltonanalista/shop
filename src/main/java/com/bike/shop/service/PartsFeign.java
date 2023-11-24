@@ -2,10 +2,11 @@ package com.bike.shop.service;
 import com.bike.shop.model.PartsModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-@FeignClient(name = "pecas",url = "localhost:8081/pecas/listar")
+@FeignClient("supply")
 public interface PartsFeign {
-    @GetMapping
+    @RequestMapping("/pecas/listar")
     List<PartsModel> listParts();
 }
