@@ -24,24 +24,40 @@ public class MaintenanceController {
     public ConvertMaintenanceService convertMaintenanceService;
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody MaintenanceModelDto maintenanceModelDto) {
-          maintenanceModel = maintenanceService.saveMaintenance(convertMaintenanceService.maintenanceEntity(maintenanceModelDto));
+        log.info("bikeshop controller valor {}"+maintenanceModelDto);
+        maintenanceModel = maintenanceService.saveMaintenance(convertMaintenanceService.maintenanceEntity(maintenanceModelDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(convertMaintenanceService.maintenanceDto(maintenanceModel));
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-               MaintenanceModel maintenanceid = maintenanceService.findMaintenanceId(id);
-          return ResponseEntity.status(HttpStatus.OK).body("MANUTENCAO REMOVIDA");
+        try {
+            MaintenanceModel maintenanceid = maintenanceService.findMaintenanceId(id);
+            log.info("VALOR MANUTENCAO A SER REMOVIDA{}"+maintenanceid);
+            maintenanceService.deleteMaintenance(maintenanceid);
+        } catch (Exception e) {
+            log.info("NAO REMOVEU MANUTENCAO EXCEPTION{}"+e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NAO HA MANUTENCAO REGISTRADA");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("MANUTENCAO REMOVIDA");
     }
     @GetMapping("/findid/{id}")
     public ResponseEntity<?> find(@PathVariable Long id) {
         MaintenanceModel cod;
-              cod = maintenanceService.findMaintenanceId(id);
+        try {
+            cod = maintenanceService.findMaintenanceId(id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NAO HA MANUTENCAO REGISTRADA");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(convertMaintenanceService.maintenanceDto(cod));
     }
     @GetMapping("/findall")
     public ResponseEntity<?> findAll() {
         List<MaintenanceModel> cod;
-                 cod = maintenanceService.all();
-            return ResponseEntity.status(HttpStatus.OK).body(cod);
+        try {
+            cod = maintenanceService.all();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MANUTENCAO NAO EXISTE");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(cod);
     }
 }

@@ -25,26 +25,50 @@ public class ClientController {
     private ClientModel clientModel;
     @PostMapping("/register")
     public ResponseEntity<ClientModelDto> registerClient(@RequestBody @Valid ClientModelDto clientModelDto) {
+
         clientModel = convertClientDtoService.clientEntity(clientModelDto);
+
             clientService.saveClient(clientModel);
+
+
+
         return ResponseEntity.status(HttpStatus.CREATED).body(convertClientDtoService.clientDto(clientModel));
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-                 ClientModel clientid = clientService.findClientId(id);
-           clientService.deleteClient(clientid);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("CLIENTE NAO EXISTE");
+        try {
+            ClientModel clientid = clientService.findClientId(id);
+            clientService.deleteClient(clientid);
+            log.info("CLIENTE-CONTROLLER = CLIENTE removida com sucesso");
+        } catch (DataIntegrityViolationException e) {
+            log.info("CLIENTE-CONTROLLER = erro ao remover CLIENTE foreignkey");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CLIENTE NAO PODE SER REMOVIDO POIS ESTA EM USO");
+        } catch (Exception e) {
+            log.info("CLIENTE-CONTROLLER = CLIENTE nao existe");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CLIENTE NAO EXISTE");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("CLIENTE REMOVIDO");
     }
     @GetMapping("/findid/{id}")
     public ResponseEntity<?> find(@PathVariable Long id) {
         ClientModel cod;
-               cod = clientService.findClientId(id);
-                 return ResponseEntity.status(HttpStatus.OK).body(convertClientDtoService.clientDto(cod));
+        try {
+            cod = clientService.findClientId(id);
+            log.info("CLIENTE-CONTROLLER = retorna CLIENTE por id");
+        } catch (Exception e) {
+            log.info("CLIENTE-CONTROLLER = erro ao buscar CLIENTE por id, nao existe");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CLIENTE NAO EXISTE");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertClientDtoService.clientDto(cod));
     }
     @GetMapping("/findall")
     public ResponseEntity<?> findAll() {
         List<ClientModel> cod;
-                 cod = clientService.all();
+        try {
+            cod = clientService.all();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CLIENTE NAO EXISTE");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(cod);
     }
 }

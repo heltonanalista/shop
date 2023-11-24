@@ -30,6 +30,7 @@ public class MaintenanceOrderController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody MaintenanceOrderDto maintenanceOrderDto) {
+
         maintenanceOrder = maintenanceOrderService.saveMaintenanceOrder(convertMaintenanceOrderService
                 .maintenanceOrderEntity(maintenanceOrderDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(bikeOrder);
@@ -37,7 +38,11 @@ public class MaintenanceOrderController {
     @GetMapping("/findall")
     public ResponseEntity<?> findAll() {
         List<MaintenanceOrder> cod;
-                cod = maintenanceOrderService.all();
-            return ResponseEntity.status(HttpStatus.OK).body(cod);
+        try {
+            cod = maintenanceOrderService.all();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MANUTENCAO NAO EXISTE");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(cod);
     }
 }

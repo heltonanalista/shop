@@ -33,11 +33,10 @@ public class BikeController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String>delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         BikeModel bikeId = bikeService.findBikeId(id);
         bikeService.deleteBike(bikeId);
-        String msg="DELETED";
-        return ResponseEntity.status(HttpStatus.OK).body(msg);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("BICICLETA REMOVIDA");
     }
 
     @GetMapping("/findid/{id}")

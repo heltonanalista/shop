@@ -31,32 +31,76 @@ public class PartsController {
 
     @GetMapping("listar")
     public List<PartsModel> listParts() {
+
+
         pecaModel = partsFeign.listParts();
+
+
         return pecaModel;
+
     }
+
     @PostMapping("/register")
+<<<<<<< HEAD
+<<<<<<< HEAD
     public ResponseEntity<PartsModelDto> register(@RequestBody @Valid PartsModelDto partsModelDto) {
 
+=======
+    public ResponseEntity<?> register(@RequestBody @Valid PartsModelDto partsModelDto) {
+        System.out.println(partsModelDto.getModel());
+            try {
+>>>>>>> parent of 6b936dd (add create table flyway)
+=======
+    public ResponseEntity<?> register(@RequestBody @Valid PartsModelDto partsModelDto) {
+        System.out.println(partsModelDto.getModel());
+            try {
+>>>>>>> parent of 6b936dd (add create table flyway)
             partsModel = partsService.saveParts(convertPartsService.partsEntity(partsModelDto));
-          return ResponseEntity.status(HttpStatus.CREATED).body(convertPartsService.partsDto(partsModel));
+            System.out.println(partsModel);
+            log.info("valor pecas{}"+partsModel);
+            log.info("PECA-CONTROLLER = PECA registrada");
+        } catch (Exception e) {
+            log.info("PECA-CONTROLLER = erro ao registrar PECA");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CAMPO NAO PODE SER VAZIO OU NULO");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(convertPartsService.partsDto(partsModel));
     }
     @GetMapping("/findid/{id}")
-    public ResponseEntity<PartsModelDto> find(@PathVariable Long id) {
+    public ResponseEntity<?> find(@PathVariable Long id) {
         PartsModel cod;
+        try {
             cod = partsService.findPartsId(id);
-          return ResponseEntity.status(HttpStatus.OK).body(convertPartsService.partsDto(cod));
+            log.info("PECA-CONTROLLER = retorna PECA por id");
+        } catch (Exception e) {
+            log.info("PECA-CONTROLLER = erro ao buscar PECA por id, nao existe");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("PECA NAO EXISTE");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(convertPartsService.partsDto(cod));
     }
     @GetMapping("/findall")
-    public ResponseEntity<List<PartsModel>> findAll() {
+    public ResponseEntity<?> findAll() {
         List<PartsModel> cod;
-               cod = partsService.all();
+        try {
+            cod = partsService.all();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("PECA NAO EXISTE");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(cod);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
-                 PartsModel partid = partsService.findPartsId(id);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            PartsModel partid = partsService.findPartsId(id);
             partsService.deleteParts(partid);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("PECA REMOVIDO");
+            log.info("PECA-CONTROLLER = PECA removida com sucesso");
+        } catch (DataIntegrityViolationException e) {
+            log.info("PECA-CONTROLLER = erro ao remover PECA foreignkey");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("PECA NAO PODE SER REMOVIDO POIS ESTA EM USO");
+        } catch (Exception e) {
+            log.info("PECA-CONTROLLER = PECA nao existe");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("PECA NAO EXISTE");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("PECA REMOVIDO");
     }
 }
 
